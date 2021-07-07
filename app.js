@@ -1,4 +1,5 @@
 const { appsignal } = require("./appsignal");
+const { handleError } = require("./handler")
 const http = require("http");
 const https = require("https");
 const tracer = appsignal.tracer();
@@ -14,7 +15,7 @@ tracer.withSpan(tracer.createSpan(), span => {
       .setName("GET /users")
       .setCategory("process_request.http")
       https
-        .get("https://jsonplaceholder.typicode.com/users", (res) => {
+        .get("https://WRONGURL", (res) => {
           let data = [];
           const headerDate =
             res.headers && res.headers.date
@@ -38,8 +39,9 @@ tracer.withSpan(tracer.createSpan(), span => {
         })
         .on("error", (err) => {
           console.log("Error: ", err.message);
+          handleError(err)
         });
-      child.close(); // don't forget to close the span if you're done with it!
+     child.close(); // don't forget to close the span if you're done with it!
     });
 
     res.statusCode = 200;
