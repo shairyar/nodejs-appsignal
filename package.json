@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@appsignal/nodejs": "^1.2.4"
+    "@appsignal/nodejs": "*",
+    "axios": "*"
   }
 }
